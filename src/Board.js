@@ -79,11 +79,33 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      // check row for more than 1 rook;
+      let rookCount = 0;
+      let row = this.attributes[rowIndex];
+
+
+      for(let i = 0; i < row.length; i++){
+        // if there is more than 1 rook, return true
+        if(row[i] === 1){
+          rookCount++
+        }
+        if(rookCount === 2){
+          return true;
+          }
+      }
+      // else return false
+      return false;
     },
+
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      let length = this.attributes.n;
+      for(let rows = 0; rows < length; rows++){
+         if(this.hasRowConflictAt(rows) === true) {
+           return true;
+         };
+      }
       return false; // fixme
     },
 
@@ -94,11 +116,36 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      // create a counter variable
+      let length = this.attributes.n;
+      let counter = 0;
+
+      // create a rows variable
+      // iterate through attributes rows at same col index
+      for(let rows = 0; rows < length; rows++){
+
+        // check if row at colIndex = 1
+        if(this.attributes[rows][colIndex] === 1){
+
+          // if current value = 1 increment counter
+          counter++
+        }
+
+        if(counter === 2){
+          return true;
+        }
+      }
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      let length = this.attributes.n;
+      for(let cols = 0; cols < length; cols++){
+         if(this.hasColConflictAt(cols) === true) {
+           return true;
+         }
+      }
       return false; // fixme
     },
 
@@ -109,7 +156,46 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+
+      // start at somewhere on
+      let length = this.attributes.n;
+      let rows = this.attributes;
+
+      // create a add space variable
+      let addSpaces = length - 2;
+
+      let concatArr = [];
+
+      for(let k = 0; k < addSpaces; k++){
+        concatArr.push(0);
+      }
+
+      for(let rowIndex = 0; rowIndex < length; rowIndex++){
+        rows[rowIndex] = concatArr.concat(rows[rowIndex]);
+      }
+
+      let initialCol = 0;
+
+      let checkDiagonal = function(x, y){
+        let counter = 0;
+        if(counter === 2){
+          return true;
+        }
+
+        for(x = 0; x < length; x++){
+          for(y = 0; y < length; y++){
+            if(rows[x][y] === 1){
+              counter++
+            }
+          }
+        }
+
+        checkDiagonal(x, y + 1);
+      }
+
+      checkDiagonal(0, 0);
+
+      return false;
     },
 
     // test if any major diagonals on this board contain conflicts
