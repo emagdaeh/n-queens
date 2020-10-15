@@ -163,7 +163,6 @@
 
       // create a add space variable
       let addSpaces = length - 2;
-
       let concatArr = [];
 
       for(let k = 0; k < addSpaces; k++){
@@ -174,27 +173,37 @@
         rows[rowIndex] = concatArr.concat(rows[rowIndex]);
       }
 
-      let initialCol = 0;
+      var colX = 0;
+      var rowY = 0;
+      var counter = 0;
+      console.log(this);
+      let checkDiagonal = function(x, y){
+        // debugger;
 
 
-      let checkDiagonal = function(arr){
-        let counter = 0;
-        if(counter === 2){
-          return true;
-        }
-
-        for(x = 0; x < length; x++){
-          for(y = 0; y < length; y++){
-            if(rows[x][y] === 1){
-              counter++
-            }
+        while(x < length){
+          if(counter === 2){
+            return true;
           }
+        console.log(rows[0][2]);
+
+          if(rows[x][y] === 1){
+            counter++
+          }
+          x++;
+          y++;
+          checkDiagonal(x, y);
         }
 
-
-        checkDiagonal(rows);
+        if(rowY < rows[0].length){
+          rowY++
+          checkDiagonal(colX, rowY);
+        }
+        return false;
       }
-      return false;
+
+      return checkDiagonal(colX, rowY);
+
     },
 
     // test if any major diagonals on this board contain conflicts
