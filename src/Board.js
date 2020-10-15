@@ -176,7 +176,8 @@
 
       let initialCol = 0;
 
-      let checkDiagonal = function(x, y){
+
+      let checkDiagonal = function(arr){
         let counter = 0;
         if(counter === 2){
           return true;
@@ -190,11 +191,9 @@
           }
         }
 
-        checkDiagonal(x, y + 1);
+
+        checkDiagonal(rows);
       }
-
-      checkDiagonal(0, 0);
-
       return false;
     },
 
